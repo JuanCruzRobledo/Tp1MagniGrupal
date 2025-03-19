@@ -1,22 +1,15 @@
-package com.fantasticos.tp1magni.persistence.dto;
+package com.fantasticos.tp1magni.controllers.dto;
 
-import com.fantasticos.tp1magni.persistence.entities.Noticia;
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 @Builder
-public class EmpresaDTO {
-
-    private Long id ;
+public class RequestEmpresaDTO {
     private String denominacion;
     private String telefono;
     private String horarioAtencion;
@@ -25,6 +18,4 @@ public class EmpresaDTO {
     private Double longitud;
     private String domicilio;
     private String email;
-    private List<NoticiaDTO> listaNoticia = new ArrayList<>();
-
 }

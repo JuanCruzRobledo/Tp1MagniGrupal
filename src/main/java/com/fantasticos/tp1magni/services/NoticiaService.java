@@ -1,5 +1,8 @@
 package com.fantasticos.tp1magni.services;
 
+import com.fantasticos.tp1magni.controllers.dto.RequestNoticiaDTO;
+import com.fantasticos.tp1magni.controllers.dto.ResponseNoticiaDTO;
+import com.fantasticos.tp1magni.controllers.mapper.NoticiaMapper;
 import com.fantasticos.tp1magni.persistence.entities.Empresa;
 import com.fantasticos.tp1magni.persistence.entities.Noticia;
 import com.fantasticos.tp1magni.persistence.repository.EmpresaRepository;
@@ -12,20 +15,27 @@ import java.util.List;
 public class NoticiaService {
     private final NoticiaRepository noticiaRepository;
     private final EmpresaRepository empresaRepository;
+    private final NoticiaMapper noticiaMapper;
 
-    public NoticiaService(NoticiaRepository noticiaRepository, EmpresaRepository empresaRepository) {
+    public NoticiaService(NoticiaRepository noticiaRepository, EmpresaRepository empresaRepository, NoticiaMapper noticiaMapper) {
         this.noticiaRepository = noticiaRepository;
         this.empresaRepository = empresaRepository;
+        this.noticiaMapper = noticiaMapper;
     }
 
-    public Noticia getNoticia(Long id) {
-        return noticiaRepository.findById(id).orElse(null);
+    public ResponseNoticiaDTO getNoticia(Long id) {
+        Noticia noticia = noticiaRepository.findById(id).orElse(null);
+        if (noticia == null) {
+            return null;
+        }
+        return noticiaMapper.toNoticiaDTO(noticia);
     }
 
-    public List<Noticia> getAllNoticia() {
-        return (List<Noticia>) noticiaRepository.findAll();
-    }
+    public List<ResponseNoticiaDTO> getAllNoticia() {
+        List<Noticia> noticiaLista = (List<Noticia>) noticiaRepository.findAll();
 
+        return noticiaMapper.toNoticiaDTOList(noticiaLista);
+    }
     public boolean deleteNoticia(Long id) {
         if (noticiaRepository.existsById(id)) {
             noticiaRepository.deleteById(id);
@@ -34,16 +44,25 @@ public class NoticiaService {
         return false;
     }
 
-    public Noticia updateNoticia(Long id, Noticia noticia) {
-        if (!noticiaRepository.existsById(id)) {
+    public ResponseNoticiaDTO updateNoticia(Long id, RequestNoticiaDTO requestNoticiaDTO) {
+        Noticia noticia = noticiaRepository.findById(id).orElse(null);
+        //Empresa empresa = empresaRepository.findById(noticia.getEmpresa().getId()).orElse(null);
+
+        if (!noticiaRepository.existsById(id) || !empresaRepository.existsById(noticia.getEmpresa().getId())) {
             return null;
         }
-        noticia.setId(id);
-        return noticiaRepository.save(noticia);
+
+        Noticia noticiaNueva = noticiaMapper.toNoticia(requestNoticiaDTO);
+        noticiaNueva.setId(id);
+        noticiaNueva.setEmpresa(noticia.getEmpresa());
+
+        Noticia addNoticia = noticiaRepository.save(noticiaNueva);
+
+        return noticiaMapper.toNoticiaDTO(addNoticia);
     }
 
-    public Noticia addNoticia(Noticia noticia, Long empresaId) {
-        if (noticia == null || empresaId == null) {
+    public ResponseNoticiaDTO addNoticia(RequestNoticiaDTO requestNoticiaDTO, Long empresaId) {
+        if (requestNoticiaDTO == null || empresaId == null) {
             return null;
         }
 
@@ -52,8 +71,12 @@ public class NoticiaService {
             return null;
         }
 
+        Noticia noticia = noticiaMapper.toNoticia(requestNoticiaDTO);
         noticia.setEmpresa(empresa);
-        return noticiaRepository.save(noticia);
+
+        Noticia addNoticia = noticiaRepository.save(noticia);
+
+        return noticiaMapper.toNoticiaDTO(addNoticia);
     }
 }
 

@@ -1,14 +1,12 @@
 package com.fantasticos.tp1magni.controllers;
 
-import com.fantasticos.tp1magni.persistence.dto.EmpresaDTO;
-import com.fantasticos.tp1magni.persistence.entities.Empresa;
-import com.fantasticos.tp1magni.persistence.entities.Noticia;
+import com.fantasticos.tp1magni.controllers.dto.RequestEmpresaDTO;
+import com.fantasticos.tp1magni.controllers.dto.ResponseEmpresaDTO;
 import com.fantasticos.tp1magni.services.EmpresaService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -22,9 +20,9 @@ public class EmpresaController {
     }
 
     @PostMapping("/post")
-    public ResponseEntity<Empresa> postEmpresa(@RequestBody Empresa empresa) {
+    public ResponseEntity<?> postEmpresa(@RequestBody RequestEmpresaDTO empresaDTO) {
         try {
-            Empresa nuevaEmpresa = empresaService.addEmpresa(empresa);
+            ResponseEmpresaDTO nuevaEmpresa = empresaService.addEmpresa(empresaDTO);
             return ResponseEntity.status(HttpStatus.CREATED).body(nuevaEmpresa);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
@@ -33,11 +31,11 @@ public class EmpresaController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<String> deleteEmpresa(@PathVariable Long id) {
+    public ResponseEntity<?> deleteEmpresa(@PathVariable Long id) {
         try {
             boolean deleted = empresaService.deleteEmpresa(id);
             if (!deleted) {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Empresa no encontrada.");
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Empresa no encontrada o contiene noticias asociadas.");
             }
             return ResponseEntity.status(HttpStatus.OK).body("Empresa eliminada correctamente.");
         } catch (Exception e) {
@@ -47,9 +45,9 @@ public class EmpresaController {
     }
 
     @PutMapping("/put/{id}")
-    public ResponseEntity<?> updateEmpresa(@PathVariable Long id, @RequestBody Empresa empresa) {
+    public ResponseEntity<?> updateEmpresa(@PathVariable Long id, @RequestBody RequestEmpresaDTO empresaDTO) {
         try {
-            Empresa empresaActualizada = empresaService.updateEmpresa(id, empresa);
+            ResponseEmpresaDTO empresaActualizada = empresaService.updateEmpresa(id, empresaDTO);
             if (empresaActualizada == null) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Empresa no encontrada.");
             }
@@ -63,7 +61,7 @@ public class EmpresaController {
     @GetMapping("/get/{id}")
     public ResponseEntity<?> getEmpresa(@PathVariable Long id) {
         try {
-            EmpresaDTO empresa = empresaService.getEmpresa(id);
+            ResponseEmpresaDTO empresa = empresaService.getEmpresa(id);
             if (empresa == null) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Empresa no encontrada.");
             }
@@ -73,12 +71,13 @@ public class EmpresaController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("Error al obtener la empresa: " + e.getMessage());
         }
+
     }
 
     @GetMapping("/getAll")
-    public ResponseEntity<List<EmpresaDTO>> getAllEmpresa() {
+    public ResponseEntity<?> getAllEmpresa() {
         try {
-            List<EmpresaDTO> empresas = empresaService.getAllEmpresa();
+            List<ResponseEmpresaDTO> empresas = empresaService.getAllEmpresa();
             return ResponseEntity.status(HttpStatus.OK).body(empresas);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);

@@ -1,6 +1,5 @@
 package com.fantasticos.tp1magni.persistence.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -39,7 +38,7 @@ public class Noticia {
     @Temporal(TemporalType.DATE)
     private Date fechaPublicacion;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "idEmpresa", referencedColumnName = "id", nullable = false)
     private Empresa empresa;
 

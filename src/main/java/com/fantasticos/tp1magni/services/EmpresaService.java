@@ -1,98 +1,70 @@
 package com.fantasticos.tp1magni.services;
 
-import com.fantasticos.tp1magni.persistence.dto.EmpresaDTO;
-import com.fantasticos.tp1magni.persistence.dto.NoticiaDTO;
+import com.fantasticos.tp1magni.controllers.dto.RequestEmpresaDTO;
+import com.fantasticos.tp1magni.controllers.dto.ResponseEmpresaDTO;
+import com.fantasticos.tp1magni.controllers.mapper.EmpresaMapper;
 import com.fantasticos.tp1magni.persistence.entities.Empresa;
+import com.fantasticos.tp1magni.persistence.entities.Noticia;
 import com.fantasticos.tp1magni.persistence.repository.EmpresaRepository;
+import com.fantasticos.tp1magni.persistence.repository.NoticiaRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class EmpresaService {
     private final EmpresaRepository empresaRepository;
+    private final NoticiaRepository noticiaRepository;
+    private final EmpresaMapper empresaMapper;
 
-    public EmpresaService(EmpresaRepository empresaRepository) {
+    public EmpresaService(EmpresaRepository empresaRepository, NoticiaRepository noticiaRepository, EmpresaMapper empresaMapper) {
         this.empresaRepository = empresaRepository;
+        this.noticiaRepository = noticiaRepository;
+        this.empresaMapper = empresaMapper;
     }
 
-    public EmpresaDTO getEmpresa(Long id) {
+    public ResponseEmpresaDTO getEmpresa(Long id) {
         Empresa empresa = empresaRepository.findById(id).orElse(null);
         if (empresa == null) {
             return null;
         }
-        return EmpresaDTO.builder()
-                .id(empresa.getId())
-                .denominacion(empresa.getDenominacion())
-                .telefono(empresa.getTelefono())
-                .horarioAtencion(empresa.getHorarioAtencion())
-                .quienesSomos(empresa.getQuienesSomos())
-                .latitud(empresa.getLatitud())
-                .longitud(empresa.getLongitud())
-                .domicilio(empresa.getDomicilio())
-                .email(empresa.getEmail())
-                .listaNoticia(empresa.getListaNoticia().stream()
-                        .map(noticia -> NoticiaDTO.builder()
-                                .id(noticia.getId())
-                                .tituloNoticia(noticia.getTituloNoticia())
-                                .resumenNoticia(noticia.getResumenNoticia())
-                                .imagenNoticia(noticia.getImagenNoticia())
-                                .contenidoHtml(noticia.getContenidoHtml())
-                                .publicada(noticia.isPublicada())
-                                .fechaPublicacion(noticia.getFechaPublicacion())
-                                .idEmpresa(empresa.getId())
-                                .build())
-                        .collect(Collectors.toList()))
-                .build();
+        return empresaMapper.toResponseEmpresaDTO(empresa);
     }
 
-    public List<EmpresaDTO> getAllEmpresa() {
+    public List<ResponseEmpresaDTO> getAllEmpresa() {
         List<Empresa> empresaLista = (List<Empresa>) empresaRepository.findAll();
-        return empresaLista.stream()
-                .map(empresa -> EmpresaDTO.builder()
-                        .id(empresa.getId())
-                        .denominacion(empresa.getDenominacion())
-                        .telefono(empresa.getTelefono())
-                        .horarioAtencion(empresa.getHorarioAtencion())
-                        .quienesSomos(empresa.getQuienesSomos())
-                        .latitud(empresa.getLatitud())
-                        .longitud(empresa.getLongitud())
-                        .domicilio(empresa.getDomicilio())
-                        .email(empresa.getEmail())
-                        .listaNoticia(empresa.getListaNoticia().stream()
-                                .map(noticia -> NoticiaDTO.builder()
-                                        .id(noticia.getId())
-                                        .tituloNoticia(noticia.getTituloNoticia())
-                                        .resumenNoticia(noticia.getResumenNoticia())
-                                        .imagenNoticia(noticia.getImagenNoticia())
-                                        .contenidoHtml(noticia.getContenidoHtml())
-                                        .publicada(noticia.isPublicada())
-                                        .fechaPublicacion(noticia.getFechaPublicacion())
-                                        .idEmpresa(empresa.getId())
-                                        .build())
-                                .collect(Collectors.toList()))
-                        .build())
-                .collect(Collectors.toList());
+
+
+        return empresaMapper.toResponseEmpresaDTOList(empresaLista);
     }
 
     public boolean deleteEmpresa(Long id) {
-        if (!empresaRepository.existsById(id)) {
+        List<Noticia> listaNoticia = noticiaRepository.findByEmpresaId(id);
+
+        if (!empresaRepository.existsById(id) || !listaNoticia.isEmpty()) {
             return false;
         }
         empresaRepository.deleteById(id);
         return true;
     }
 
-    public Empresa updateEmpresa(Long id, Empresa empresa) {
+    public ResponseEmpresaDTO updateEmpresa(Long id, RequestEmpresaDTO empresaDTO) {
         if (!empresaRepository.existsById(id)) {
             return null;
         }
-        empresa.setId(id);
-        return empresaRepository.save(empresa);
+
+        Empresa empresaNueva = empresaMapper.toEntity(empresaDTO);
+        empresaNueva.setId(id);
+
+        return empresaMapper.toResponseEmpresaDTO(empresaRepository.save(empresaNueva));
     }
 
-    public Empresa addEmpresa(Empresa empresa) {
-        return empresaRepository.save(empresa);
+    public ResponseEmpresaDTO addEmpresa(RequestEmpresaDTO empresaDTO) {
+        Empresa empresa = empresaMapper.toEntity(empresaDTO);
+
+        Empresa addEmpresa = empresaRepository.save(empresa);
+
+
+        return empresaMapper.toResponseEmpresaDTO(addEmpresa);
     }
 }

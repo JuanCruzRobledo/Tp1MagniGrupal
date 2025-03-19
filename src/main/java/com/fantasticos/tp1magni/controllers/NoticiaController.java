@@ -2,7 +2,8 @@ package com.fantasticos.tp1magni.controllers;
 
 
 
-import com.fantasticos.tp1magni.persistence.entities.Noticia;
+import com.fantasticos.tp1magni.controllers.dto.RequestNoticiaDTO;
+import com.fantasticos.tp1magni.controllers.dto.ResponseNoticiaDTO;
 import com.fantasticos.tp1magni.services.NoticiaService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,24 +22,25 @@ public class NoticiaController {
         this.noticiaService = noticiaService;
     }
 
-    @PostMapping("/post")
-    public ResponseEntity<Noticia> postNoticia(@RequestBody Noticia noticia, @RequestParam Long id) {
-        if (noticia == null) {
+    @PostMapping("/post/empresa={idEmpresa}")
+    public ResponseEntity<?> postNoticia(@RequestBody RequestNoticiaDTO requestNoticiaDTO, @PathVariable Long idEmpresa) {
+        if (requestNoticiaDTO == null) {
             return ResponseEntity.badRequest().build();
         }
         try {
-            Noticia nuevaNoticia = noticiaService.addNoticia(noticia, id);
+            ResponseNoticiaDTO nuevaNoticia = noticiaService.addNoticia(requestNoticiaDTO, idEmpresa);
             if (nuevaNoticia == null) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
             }
             return ResponseEntity.status(HttpStatus.CREATED).body(nuevaNoticia);
         } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error al agregar la noticia", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error al agregar la noticia: " + e.getMessage());
         }
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Boolean> deleteNoticia(@PathVariable Long id) {
+    public ResponseEntity<?> deleteNoticia(@PathVariable Long id) {
         if (id == null) {
             return ResponseEntity.badRequest().build();
         }
@@ -49,46 +51,49 @@ public class NoticiaController {
             }
             return ResponseEntity.ok(true);
         } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error al eliminar la noticia", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error al eliminar la noticia: " + e.getMessage());
         }
     }
 
     @PutMapping("/put/{id}")
-    public ResponseEntity<Noticia> updateNoticia(@PathVariable Long id, @RequestBody Noticia noticia) {
-        if (id == null || noticia == null) {
+    public ResponseEntity<?> updateNoticia(@PathVariable Long id, @RequestBody RequestNoticiaDTO requestNoticiaDTO) {
+        if (id == null || requestNoticiaDTO == null) {
             return ResponseEntity.badRequest().build();
         }
         try {
-            Noticia updatedNoticia = noticiaService.updateNoticia(id, noticia);
+            ResponseNoticiaDTO updatedNoticia = noticiaService.updateNoticia(id, requestNoticiaDTO);
             if (updatedNoticia == null) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
             }
             return ResponseEntity.ok(updatedNoticia);
         } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error al actualizar la noticia", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error al actualizar la noticia: " + e.getMessage());
         }
     }
 
     @GetMapping("/get/{id}")
-    public ResponseEntity<Noticia> getNoticia(@PathVariable Long id) {
+    public ResponseEntity<?> getNoticia(@PathVariable Long id) {
         if (id == null) {
             return ResponseEntity.badRequest().build();
         }
         try {
-            Noticia noticia = noticiaService.getNoticia(id);
+            ResponseNoticiaDTO noticia = noticiaService.getNoticia(id);
             if (noticia == null) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
             }
             return ResponseEntity.ok(noticia);
         } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error al obtener la noticia", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error al obtener la noticia: " + e.getMessage());
         }
     }
 
     @GetMapping("/getAll")
-    public ResponseEntity<List<Noticia>> getAllNoticia() {
+    public ResponseEntity<?> getAllNoticia() {
         try {
-            List<Noticia> noticias = noticiaService.getAllNoticia();
+            List<ResponseNoticiaDTO> noticias = noticiaService.getAllNoticia();
             if (noticias.isEmpty()) {
                 return ResponseEntity.noContent().build();
             }
