@@ -81,7 +81,7 @@ public class NoticiaController {
             return ResponseEntity.badRequest().build();
         }
         try {
-            ResponseNoticiaDTO noticia = noticiaService.getNoticia(id);
+            ResponseNoticiaWithEmpresaDTO noticia = noticiaService.getNoticia(id);
             if (noticia == null) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
             }

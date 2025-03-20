@@ -24,12 +24,15 @@ public class NoticiaService {
         this.noticiaMapper = noticiaMapper;
     }
 
-    public ResponseNoticiaDTO getNoticia(Long id) {
+    public ResponseNoticiaWithEmpresaDTO getNoticia(Long id) {
         Noticia noticia = noticiaRepository.findById(id).orElse(null);
-        if (noticia == null) {
+        Empresa empresa = empresaRepository.findById(noticia.getEmpresa().getId()).orElse(null);
+        if (noticia == null || empresa == null) {
             return null;
         }
-        return noticiaMapper.toNoticiaDTO(noticia);
+        ResponseNoticiaWithEmpresaDTO noticiaWithEmpresaDTO = noticiaMapper.toResponseNoticiaWithEmpresaDTO(noticia);
+        noticiaWithEmpresaDTO.setIdEmpresa(empresa.getId());
+        return  noticiaWithEmpresaDTO;
     }
 
     public List<ResponseNoticiaWithEmpresaDTO> getAllNoticia() {
