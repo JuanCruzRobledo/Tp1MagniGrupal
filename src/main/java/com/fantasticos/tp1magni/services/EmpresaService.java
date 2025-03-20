@@ -2,7 +2,7 @@ package com.fantasticos.tp1magni.services;
 
 import com.fantasticos.tp1magni.controllers.dto.RequestEmpresaDTO;
 import com.fantasticos.tp1magni.controllers.dto.ResponseEmpresaDTO;
-import com.fantasticos.tp1magni.controllers.dto.ResponseEmpresaNoticiasDTO;
+import com.fantasticos.tp1magni.controllers.dto.ResponseEmpresaWithNoticiasDTO;
 import com.fantasticos.tp1magni.controllers.dto.ResponseNoticiaDTO;
 import com.fantasticos.tp1magni.controllers.mapper.EmpresaMapper;
 import com.fantasticos.tp1magni.controllers.mapper.NoticiaMapper;
@@ -29,14 +29,14 @@ public class EmpresaService {
         this.noticiaMapper = noticiaMapper;
     }
 
-    public ResponseEmpresaNoticiasDTO getEmpresa(Long id) {
+    public ResponseEmpresaWithNoticiasDTO getEmpresa(Long id) {
         Empresa empresa = empresaRepository.findById(id).orElse(null);
         List<Noticia> noticias = noticiaRepository.findByEmpresaId(id);
         if (empresa == null) {
             return null;
         }
         List<ResponseNoticiaDTO> listaNueva = noticiaMapper.toNoticiaDTOList(noticias);
-        ResponseEmpresaNoticiasDTO response = empresaMapper.toResponseEmpresaNoticiasDTO(empresa);
+        ResponseEmpresaWithNoticiasDTO response = empresaMapper.toResponseEmpresaNoticiasDTO(empresa);
         response.setListaNoticias(listaNueva);
 
         return response;

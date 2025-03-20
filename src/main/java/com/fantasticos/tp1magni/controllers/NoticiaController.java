@@ -5,6 +5,7 @@ package com.fantasticos.tp1magni.controllers;
 import com.fantasticos.tp1magni.controllers.dto.RequestNoticiaDTO;
 import com.fantasticos.tp1magni.controllers.dto.ResponseNoticiaDTO;
 import com.fantasticos.tp1magni.services.NoticiaService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,7 +24,7 @@ public class NoticiaController {
     }
 
     @PostMapping("/post/empresa={idEmpresa}")
-    public ResponseEntity<?> postNoticia(@RequestBody RequestNoticiaDTO requestNoticiaDTO, @PathVariable Long idEmpresa) {
+    public ResponseEntity<?> postNoticia(@RequestBody @Valid RequestNoticiaDTO requestNoticiaDTO, @PathVariable Long idEmpresa) {
         if (requestNoticiaDTO == null) {
             return ResponseEntity.badRequest().build();
         }
@@ -57,7 +58,7 @@ public class NoticiaController {
     }
 
     @PutMapping("/put/{id}")
-    public ResponseEntity<?> updateNoticia(@PathVariable Long id, @RequestBody RequestNoticiaDTO requestNoticiaDTO) {
+    public ResponseEntity<?> updateNoticia(@PathVariable Long id, @RequestBody @Valid RequestNoticiaDTO requestNoticiaDTO) {
         if (id == null || requestNoticiaDTO == null) {
             return ResponseEntity.badRequest().build();
         }

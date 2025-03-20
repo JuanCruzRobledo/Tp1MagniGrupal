@@ -2,8 +2,9 @@ package com.fantasticos.tp1magni.controllers;
 
 import com.fantasticos.tp1magni.controllers.dto.RequestEmpresaDTO;
 import com.fantasticos.tp1magni.controllers.dto.ResponseEmpresaDTO;
-import com.fantasticos.tp1magni.controllers.dto.ResponseEmpresaNoticiasDTO;
+import com.fantasticos.tp1magni.controllers.dto.ResponseEmpresaWithNoticiasDTO;
 import com.fantasticos.tp1magni.services.EmpresaService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,7 +22,7 @@ public class EmpresaController {
     }
 
     @PostMapping("/post")
-    public ResponseEntity<?> postEmpresa(@RequestBody RequestEmpresaDTO empresaDTO) {
+    public ResponseEntity<?> postEmpresa(@RequestBody @Valid RequestEmpresaDTO empresaDTO) {
         try {
             ResponseEmpresaDTO nuevaEmpresa = empresaService.addEmpresa(empresaDTO);
             return ResponseEntity.status(HttpStatus.CREATED).body(nuevaEmpresa);
@@ -46,7 +47,7 @@ public class EmpresaController {
     }
 
     @PutMapping("/put/{id}")
-    public ResponseEntity<?> updateEmpresa(@PathVariable Long id, @RequestBody RequestEmpresaDTO empresaDTO) {
+    public ResponseEntity<?> updateEmpresa(@PathVariable Long id, @RequestBody @Valid RequestEmpresaDTO empresaDTO) {
         try {
             ResponseEmpresaDTO empresaActualizada = empresaService.updateEmpresa(id, empresaDTO);
             if (empresaActualizada == null) {
@@ -63,7 +64,7 @@ public class EmpresaController {
     // Get 1 empresa con todas sus noticias
     public ResponseEntity<?> getEmpresa(@PathVariable Long id) {
         try {
-            ResponseEmpresaNoticiasDTO empresa = empresaService.getEmpresa(id);
+            ResponseEmpresaWithNoticiasDTO empresa = empresaService.getEmpresa(id);
             if (empresa == null) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Empresa no encontrada.");
             }
