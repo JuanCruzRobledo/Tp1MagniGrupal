@@ -90,6 +90,19 @@ public class NoticiaController {
         }
     }
 
+    @GetMapping("/getAll/{idEmpresa}")
+    public ResponseEntity<?> getAllNoticiasEmpresa(@PathVariable Long idEmpresa) {
+        try {
+            List<ResponseNoticiaDTO> noticias = noticiaService.getAllNoticiasFromEmpresas(idEmpresa);
+            if (noticias.isEmpty()) {
+                return ResponseEntity.noContent().build();
+            }
+            return ResponseEntity.ok(noticias);
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error al obtener todas las noticias", e);
+        }
+    }
+
     @GetMapping("/getAll")
     public ResponseEntity<?> getAllNoticia() {
         try {

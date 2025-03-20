@@ -36,6 +36,13 @@ public class NoticiaService {
 
         return noticiaMapper.toNoticiaDTOList(noticiaLista);
     }
+
+    public List<ResponseNoticiaDTO> getAllNoticiasFromEmpresas(Long idEmpresa) {
+        List<Noticia> noticiaLista = (List<Noticia>) noticiaRepository.findByEmpresaId(idEmpresa);
+
+        return noticiaMapper.toNoticiaDTOList(noticiaLista);
+    }
+
     public boolean deleteNoticia(Long id) {
         if (noticiaRepository.existsById(id)) {
             noticiaRepository.deleteById(id);

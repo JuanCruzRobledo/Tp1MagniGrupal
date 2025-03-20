@@ -23,6 +23,5 @@ public class ResponseEmpresaDTO {
     private Double longitud;
     private String domicilio;
     private String email;
-    private List<ResponseNoticiaDTO> listaNoticia = new ArrayList<>();
 
 }
