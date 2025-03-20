@@ -21,6 +21,6 @@ public class ResponseEmpresaWithNoticiasDTO {
     private Double longitud;
     private String domicilio;
     private String email;
-    private List<ResponseNoticiaDTO> listaNoticias;
+    private List<ResponseNoticiaDTO> listaNoticia;
 
 }
