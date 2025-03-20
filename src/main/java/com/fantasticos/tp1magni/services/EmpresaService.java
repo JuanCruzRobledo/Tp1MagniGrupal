@@ -37,7 +37,7 @@ public class EmpresaService {
         }
         List<ResponseNoticiaDTO> listaNueva = noticiaMapper.toNoticiaDTOList(noticias);
         ResponseEmpresaWithNoticiasDTO response = empresaMapper.toResponseEmpresaNoticiasDTO(empresa);
-        response.setListaNoticias(listaNueva);
+        response.setListaNoticia(listaNueva);
 
         return response;
     }

@@ -2,6 +2,7 @@ package com.fantasticos.tp1magni.services;
 
 import com.fantasticos.tp1magni.controllers.dto.RequestNoticiaDTO;
 import com.fantasticos.tp1magni.controllers.dto.ResponseNoticiaDTO;
+import com.fantasticos.tp1magni.controllers.dto.ResponseNoticiaWithEmpresaDTO;
 import com.fantasticos.tp1magni.controllers.mapper.NoticiaMapper;
 import com.fantasticos.tp1magni.persistence.entities.Empresa;
 import com.fantasticos.tp1magni.persistence.entities.Noticia;
@@ -31,10 +32,10 @@ public class NoticiaService {
         return noticiaMapper.toNoticiaDTO(noticia);
     }
 
-    public List<ResponseNoticiaDTO> getAllNoticia() {
+    public List<ResponseNoticiaWithEmpresaDTO> getAllNoticia() {
         List<Noticia> noticiaLista = (List<Noticia>) noticiaRepository.findAll();
 
-        return noticiaMapper.toNoticiaDTOList(noticiaLista);
+        return noticiaMapper.toResponseNoticiaWithEmpresaDTO(noticiaLista);
     }
 
     public List<ResponseNoticiaDTO> getAllNoticiasFromEmpresas(Long idEmpresa) {

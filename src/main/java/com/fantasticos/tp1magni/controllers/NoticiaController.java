@@ -4,6 +4,7 @@ package com.fantasticos.tp1magni.controllers;
 
 import com.fantasticos.tp1magni.controllers.dto.RequestNoticiaDTO;
 import com.fantasticos.tp1magni.controllers.dto.ResponseNoticiaDTO;
+import com.fantasticos.tp1magni.controllers.dto.ResponseNoticiaWithEmpresaDTO;
 import com.fantasticos.tp1magni.services.NoticiaService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -107,7 +108,7 @@ public class NoticiaController {
     @GetMapping("/getAll")
     public ResponseEntity<?> getAllNoticia() {
         try {
-            List<ResponseNoticiaDTO> noticias = noticiaService.getAllNoticia();
+            List<ResponseNoticiaWithEmpresaDTO> noticias = noticiaService.getAllNoticia();
             if (noticias.isEmpty()) {
                 return ResponseEntity.noContent().build();
             }

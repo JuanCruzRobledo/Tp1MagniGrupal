@@ -1,8 +1,11 @@
 package com.fantasticos.tp1magni.controllers.dto;
 
+import lombok.Data;
+
 import java.util.Date;
 
-public class ResponseNoticiaWithEmpresa {
+@Data
+public class ResponseNoticiaWithEmpresaDTO {
     private Long id;
     private String tituloNoticia;
     private String resumenNoticia;
