@@ -2,6 +2,7 @@ package com.fantasticos.tp1magni.controllers;
 
 import com.fantasticos.tp1magni.controllers.dto.RequestEmpresaDTO;
 import com.fantasticos.tp1magni.controllers.dto.ResponseEmpresaDTO;
+import com.fantasticos.tp1magni.controllers.dto.ResponseEmpresaNoticiasDTO;
 import com.fantasticos.tp1magni.services.EmpresaService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -59,9 +60,10 @@ public class EmpresaController {
     }
 
     @GetMapping("/get/{id}")
+    // Get 1 empresa con todas sus noticias
     public ResponseEntity<?> getEmpresa(@PathVariable Long id) {
         try {
-            ResponseEmpresaDTO empresa = empresaService.getEmpresa(id);
+            ResponseEmpresaNoticiasDTO empresa = empresaService.getEmpresa(id);
             if (empresa == null) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Empresa no encontrada.");
             }
@@ -75,6 +77,7 @@ public class EmpresaController {
     }
 
     @GetMapping("/getAll")
+    // Get todas las empresas sin sus noticias
     public ResponseEntity<?> getAllEmpresa() {
         try {
             List<ResponseEmpresaDTO> empresas = empresaService.getAllEmpresa();

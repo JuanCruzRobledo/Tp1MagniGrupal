@@ -1,8 +1,10 @@
 package com.fantasticos.tp1magni.controllers.mapper;
 
 import com.fantasticos.tp1magni.controllers.dto.RequestNoticiaDTO;
+import com.fantasticos.tp1magni.controllers.dto.ResponseEmpresaNoticiasDTO;
 import com.fantasticos.tp1magni.controllers.dto.ResponseNoticiaDTO;
 
+import com.fantasticos.tp1magni.persistence.entities.Empresa;
 import com.fantasticos.tp1magni.persistence.entities.Noticia;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;

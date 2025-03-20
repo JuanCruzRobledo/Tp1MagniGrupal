@@ -2,6 +2,7 @@ package com.fantasticos.tp1magni.controllers.mapper;
 
 import com.fantasticos.tp1magni.controllers.dto.RequestEmpresaDTO;
 import com.fantasticos.tp1magni.controllers.dto.ResponseEmpresaDTO;
+import com.fantasticos.tp1magni.controllers.dto.ResponseEmpresaNoticiasDTO;
 import com.fantasticos.tp1magni.persistence.entities.Empresa;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -15,8 +16,9 @@ public interface EmpresaMapper {
     @Mapping(target = "listaNoticia", ignore = true)
     Empresa toEntity(RequestEmpresaDTO dto);
 
-    @Mapping(target = "listaNoticia", source = "listaNoticia")
     ResponseEmpresaDTO toResponseEmpresaDTO(Empresa empresa);
 
     List<ResponseEmpresaDTO> toResponseEmpresaDTOList(List<Empresa> empresas);
+
+    ResponseEmpresaNoticiasDTO toResponseEmpresaNoticiasDTO(Empresa empresa);
 }

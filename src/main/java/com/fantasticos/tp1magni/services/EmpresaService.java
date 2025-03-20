@@ -2,7 +2,10 @@ package com.fantasticos.tp1magni.services;
 
 import com.fantasticos.tp1magni.controllers.dto.RequestEmpresaDTO;
 import com.fantasticos.tp1magni.controllers.dto.ResponseEmpresaDTO;
+import com.fantasticos.tp1magni.controllers.dto.ResponseEmpresaNoticiasDTO;
+import com.fantasticos.tp1magni.controllers.dto.ResponseNoticiaDTO;
 import com.fantasticos.tp1magni.controllers.mapper.EmpresaMapper;
+import com.fantasticos.tp1magni.controllers.mapper.NoticiaMapper;
 import com.fantasticos.tp1magni.persistence.entities.Empresa;
 import com.fantasticos.tp1magni.persistence.entities.Noticia;
 import com.fantasticos.tp1magni.persistence.repository.EmpresaRepository;
@@ -16,19 +19,27 @@ public class EmpresaService {
     private final EmpresaRepository empresaRepository;
     private final NoticiaRepository noticiaRepository;
     private final EmpresaMapper empresaMapper;
+    private final NoticiaMapper noticiaMapper;
 
-    public EmpresaService(EmpresaRepository empresaRepository, NoticiaRepository noticiaRepository, EmpresaMapper empresaMapper) {
+
+    public EmpresaService(EmpresaRepository empresaRepository, NoticiaRepository noticiaRepository, EmpresaMapper empresaMapper, NoticiaMapper noticiaMapper) {
         this.empresaRepository = empresaRepository;
         this.noticiaRepository = noticiaRepository;
         this.empresaMapper = empresaMapper;
+        this.noticiaMapper = noticiaMapper;
     }
 
-    public ResponseEmpresaDTO getEmpresa(Long id) {
+    public ResponseEmpresaNoticiasDTO getEmpresa(Long id) {
         Empresa empresa = empresaRepository.findById(id).orElse(null);
+        List<Noticia> noticias = noticiaRepository.findByEmpresaId(id);
         if (empresa == null) {
             return null;
         }
-        return empresaMapper.toResponseEmpresaDTO(empresa);
+        List<ResponseNoticiaDTO> listaNueva = noticiaMapper.toNoticiaDTOList(noticias);
+        ResponseEmpresaNoticiasDTO response = empresaMapper.toResponseEmpresaNoticiasDTO(empresa);
+        response.setListaNoticias(listaNueva);
+
+        return response;
     }
 
     public List<ResponseEmpresaDTO> getAllEmpresa() {
