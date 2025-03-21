@@ -1,6 +1,7 @@
 package com.fantasticos.tp1magni.controllers.mapper;
 
 import com.fantasticos.tp1magni.controllers.dto.RequestEmpresaDTO;
+import com.fantasticos.tp1magni.controllers.dto.ResponseBasicEmpresaDTO;
 import com.fantasticos.tp1magni.controllers.dto.ResponseEmpresaDTO;
 import com.fantasticos.tp1magni.controllers.dto.ResponseEmpresaWithNoticiasDTO;
 import com.fantasticos.tp1magni.persistence.entities.Empresa;
@@ -21,4 +22,8 @@ public interface EmpresaMapper {
     List<ResponseEmpresaDTO> toResponseEmpresaDTOList(List<Empresa> empresas);
 
     ResponseEmpresaWithNoticiasDTO toResponseEmpresaNoticiasDTO(Empresa empresa);
+
+    ResponseBasicEmpresaDTO toResponseBasicEmpresaDTO(Empresa empresa);
+
+    List<ResponseBasicEmpresaDTO> toResponseBasicEmpresaDTOList(List<Empresa> empresas);
 }

@@ -1,6 +1,7 @@
 package com.fantasticos.tp1magni.controllers;
 
 import com.fantasticos.tp1magni.controllers.dto.RequestEmpresaDTO;
+import com.fantasticos.tp1magni.controllers.dto.ResponseBasicEmpresaDTO;
 import com.fantasticos.tp1magni.controllers.dto.ResponseEmpresaDTO;
 import com.fantasticos.tp1magni.controllers.dto.ResponseEmpresaWithNoticiasDTO;
 import com.fantasticos.tp1magni.services.EmpresaService;
@@ -77,11 +78,39 @@ public class EmpresaController {
 
     }
 
+    // Get 1 empresa SIN sus noticias
+    @GetMapping("/simple/{id}")
+    public ResponseEntity<?> getEmpresaSimple(@PathVariable Long id) {
+        try {
+            ResponseEmpresaDTO empresa = empresaService.getEmpresaSimple(id);
+            if (empresa == null) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Empresa no encontrada.");
+            }
+
+            return ResponseEntity.status(HttpStatus.OK).body(empresa);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error al obtener la empresa: " + e.getMessage());
+        }
+    }
+
     @GetMapping("/getAll")
     // Get todas las empresas sin sus noticias
     public ResponseEntity<?> getAllEmpresa() {
         try {
             List<ResponseEmpresaDTO> empresas = empresaService.getAllEmpresa();
+            return ResponseEntity.status(HttpStatus.OK).body(empresas);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+    }
+
+
+    @GetMapping("basic/getAll")
+    // Get todas las empresas con ID y DENOMINACION
+    public ResponseEntity<?> getAllBasicEmpresa() {
+        try {
+            List<ResponseBasicEmpresaDTO> empresas = empresaService.getAllBasicEmpresa();
             return ResponseEntity.status(HttpStatus.OK).body(empresas);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);

@@ -1,9 +1,6 @@
 package com.fantasticos.tp1magni.services;
 
-import com.fantasticos.tp1magni.controllers.dto.RequestEmpresaDTO;
-import com.fantasticos.tp1magni.controllers.dto.ResponseEmpresaDTO;
-import com.fantasticos.tp1magni.controllers.dto.ResponseEmpresaWithNoticiasDTO;
-import com.fantasticos.tp1magni.controllers.dto.ResponseNoticiaDTO;
+import com.fantasticos.tp1magni.controllers.dto.*;
 import com.fantasticos.tp1magni.controllers.mapper.EmpresaMapper;
 import com.fantasticos.tp1magni.controllers.mapper.NoticiaMapper;
 import com.fantasticos.tp1magni.persistence.entities.Empresa;
@@ -42,11 +39,27 @@ public class EmpresaService {
         return response;
     }
 
+    public ResponseEmpresaDTO getEmpresaSimple(Long id) {
+        Empresa empresa = empresaRepository.findById(id).orElse(null);
+        if (empresa == null) {
+            return null;
+        }
+
+        return empresaMapper.toResponseEmpresaDTO(empresa);
+    }
+
     public List<ResponseEmpresaDTO> getAllEmpresa() {
         List<Empresa> empresaLista = (List<Empresa>) empresaRepository.findAll();
 
 
         return empresaMapper.toResponseEmpresaDTOList(empresaLista);
+    }
+
+    public List<ResponseBasicEmpresaDTO> getAllBasicEmpresa() {
+        List<Empresa> empresaLista = (List<Empresa>) empresaRepository.findAll();
+
+
+        return empresaMapper.toResponseBasicEmpresaDTOList(empresaLista);
     }
 
     public boolean deleteEmpresa(Long id) {
