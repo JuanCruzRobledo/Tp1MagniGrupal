@@ -8,9 +8,12 @@ import com.fantasticos.tp1magni.persistence.entities.Empresa;
 import com.fantasticos.tp1magni.persistence.entities.Noticia;
 import com.fantasticos.tp1magni.persistence.repository.EmpresaRepository;
 import com.fantasticos.tp1magni.persistence.repository.NoticiaRepository;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class NoticiaService {
@@ -46,6 +49,18 @@ public class NoticiaService {
 
         return noticiaMapper.toNoticiaDTOList(noticiaLista);
     }
+
+    public List<ResponseNoticiaWithEmpresaDTO> getRecentNoticias(int quantity, Long idEmpresa) {
+        Pageable pageable = PageRequest.of(0, quantity);
+        List<Noticia> noticiaLista = noticiaRepository.findRecentNByEmpresaId(idEmpresa, pageable);
+
+        //Convierte la lista en un Stream, lo que permite aplicar operaciones como transformación (map), filtrado, ordenación, etc.
+        return noticiaLista.stream()
+                //Para cada noticia, llamamos al mapper que convierte un objeto Noticia en un ResponseNoticiaWithEmpresaDTO.
+                .map(noticiaMapper::toResponseNoticiaWithEmpresaDTO)
+                .collect(Collectors.toList());
+    }
+
 
     public boolean deleteNoticia(Long id) {
         if (noticiaRepository.existsById(id)) {

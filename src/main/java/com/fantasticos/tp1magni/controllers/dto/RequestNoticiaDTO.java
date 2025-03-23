@@ -33,6 +33,5 @@ public class RequestNoticiaDTO {
     private Boolean publicada;
 
     @NotNull(message = "La fecha de publicación no puede ser nula")
-    @FutureOrPresent(message = "La fecha de publicación no puede ser en el pasado")
     private Date fechaPublicacion;
 }

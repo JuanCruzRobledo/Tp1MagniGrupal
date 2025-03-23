@@ -92,6 +92,7 @@ public class NoticiaController {
         }
     }
 
+    //Acá getteamos todas las noticias de una empresa
     @GetMapping("/getAll/{idEmpresa}")
     public ResponseEntity<?> getAllNoticiasEmpresa(@PathVariable Long idEmpresa) {
         try {
@@ -101,7 +102,7 @@ public class NoticiaController {
             }
             return ResponseEntity.ok(noticias);
         } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error al obtener todas las noticias", e);
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error al obtener todas las noticias: ", e);
         }
     }
 
@@ -114,7 +115,22 @@ public class NoticiaController {
             }
             return ResponseEntity.ok(noticias);
         } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error al obtener todas las noticias", e);
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error al obtener todas las noticias ", e);
+        }
+    }
+
+    //Acá getteamos solo las 5 o 20 noticias más recientes de 1 empresa, dependiendo
+    //de si el pedido viene del buscador o del slider
+    @GetMapping("/getRecent/{quantity}/{idEmpresa}")
+    public ResponseEntity<?> getRecentNoticias(@PathVariable int quantity, @PathVariable Long idEmpresa) {
+        try {
+            List<ResponseNoticiaWithEmpresaDTO> noticias = noticiaService.getRecentNoticias(quantity, idEmpresa);
+            if (noticias.isEmpty()) {
+                return ResponseEntity.noContent().build();
+            }
+            return ResponseEntity.ok(noticias);
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error al obtener las noticias recientes: ", e);
         }
     }
 }
