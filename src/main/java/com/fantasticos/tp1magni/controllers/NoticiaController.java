@@ -133,4 +133,20 @@ public class NoticiaController {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error al obtener las noticias recientes: ", e);
         }
     }
+    
+    
+    @GetMapping("/getSearch/{idEmpresa}")
+    public ResponseEntity<?> searchNoticias(
+            @PathVariable Long idEmpresa,
+            @RequestParam String nombreNoticia) {
+        System.out.println("Endpoint alcanzado con idEmpresa: " + idEmpresa + ", nombreNoticia: " + nombreNoticia);
+        List<ResponseNoticiaDTO> noticias = noticiaService.searchNoticias(idEmpresa, nombreNoticia);
+        if (noticias.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(noticias);
+    }
+    
+    
+    
 }

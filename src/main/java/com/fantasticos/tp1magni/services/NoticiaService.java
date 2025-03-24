@@ -12,6 +12,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -60,8 +61,20 @@ public class NoticiaService {
                 .map(noticiaMapper::toResponseNoticiaWithEmpresaDTO)
                 .collect(Collectors.toList());
     }
-
-
+    
+    public List<ResponseNoticiaDTO> searchNoticias(Long idEmpresa, String titulo) {
+        List<Noticia> todasLasNoticias = noticiaRepository.findByEmpresaId(idEmpresa);
+        
+        List<Noticia> noticiasFiltradas = todasLasNoticias.stream()
+                                                  .filter(noticia -> noticia.getTituloNoticia().toLowerCase().contains(titulo.toLowerCase()) ||
+                                                                             noticia.getResumenNoticia().toLowerCase().contains(titulo.toLowerCase()))
+                                                  .collect(Collectors.toList());
+        
+        return noticiaMapper.toNoticiaDTOList(noticiasFiltradas);
+    }
+    
+    
+    
     public boolean deleteNoticia(Long id) {
         if (noticiaRepository.existsById(id)) {
             noticiaRepository.deleteById(id);
@@ -104,5 +117,8 @@ public class NoticiaService {
 
         return noticiaMapper.toNoticiaDTO(addNoticia);
     }
+    
+
+    
 }
 
