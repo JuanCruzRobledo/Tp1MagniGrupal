@@ -24,13 +24,13 @@ public class NoticiaController {
         this.noticiaService = noticiaService;
     }
 
-    @PostMapping("/post/empresa={idEmpresa}")
-    public ResponseEntity<?> postNoticia(@RequestBody @Valid RequestNoticiaDTO requestNoticiaDTO, @PathVariable Long idEmpresa) {
+    @PostMapping("/post")
+    public ResponseEntity<?> postNoticia(@RequestBody @Valid RequestNoticiaDTO requestNoticiaDTO, @RequestParam(name = "empresaId") Long empresaId) {
         if (requestNoticiaDTO == null) {
             return ResponseEntity.badRequest().build();
         }
         try {
-            ResponseNoticiaDTO nuevaNoticia = noticiaService.addNoticia(requestNoticiaDTO, idEmpresa);
+            ResponseNoticiaDTO nuevaNoticia = noticiaService.addNoticia(requestNoticiaDTO, empresaId);
             if (nuevaNoticia == null) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
             }
