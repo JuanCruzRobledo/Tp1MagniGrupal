@@ -5,8 +5,11 @@ package com.fantasticos.tp1magni.controllers;
 import com.fantasticos.tp1magni.controllers.dto.RequestNoticiaDTO;
 import com.fantasticos.tp1magni.controllers.dto.ResponseNoticiaDTO;
 import com.fantasticos.tp1magni.controllers.dto.ResponseNoticiaWithEmpresaDTO;
+import com.fantasticos.tp1magni.persistence.entities.Noticia;
 import com.fantasticos.tp1magni.services.NoticiaService;
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -149,7 +152,10 @@ public class NoticiaController {
         }
         return ResponseEntity.ok(noticias);
     }
-    
-    
+
+    @GetMapping
+    public Page<ResponseNoticiaDTO> obtenerPaginados(Pageable pageable) {
+        return noticiaService.obtenerPaginados(pageable);
+    }
     
 }

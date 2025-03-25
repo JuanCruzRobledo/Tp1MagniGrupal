@@ -8,6 +8,7 @@ import com.fantasticos.tp1magni.persistence.entities.Noticia;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 
@@ -26,4 +27,6 @@ public interface NoticiaMapper {
 
     //Noticia toNoticia(ResponseNoticiaDTO responseNoticiaDTO);
     Noticia toNoticia (RequestNoticiaDTO requestNoticiaDTO);
+
+
 }

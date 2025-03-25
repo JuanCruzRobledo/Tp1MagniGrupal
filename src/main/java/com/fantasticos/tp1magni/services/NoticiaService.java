@@ -8,9 +8,7 @@ import com.fantasticos.tp1magni.persistence.entities.Empresa;
 import com.fantasticos.tp1magni.persistence.entities.Noticia;
 import com.fantasticos.tp1magni.persistence.repository.EmpresaRepository;
 import com.fantasticos.tp1magni.persistence.repository.NoticiaRepository;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
@@ -120,8 +118,27 @@ public class NoticiaService {
 
         return noticiaMapper.toNoticiaDTO(addNoticia);
     }
-    
 
+    public Page<ResponseNoticiaDTO> obtenerPaginados(Pageable pageable) {
+        // Obtener la página de noticias desde el repositorio
+        Page<Noticia> listaNoticia = noticiaRepository.findAll(pageable);
+
+        // Convertir cada Noticia a ResponseNoticiaDTO
+        List<ResponseNoticiaDTO> listaResponseNoticiaDTO = listaNoticia.getContent().stream()
+                .map(noticia -> ResponseNoticiaDTO.builder()
+                        .id(noticia.getId())
+                        .tituloNoticia(noticia.getTituloNoticia())
+                        .resumenNoticia(noticia.getResumenNoticia())
+                        .imagenNoticia(noticia.getImagenNoticia())
+                        .contenidoHtml(noticia.getContenidoHtml())
+                        .publicada(noticia.isPublicada())
+                        .fechaPublicacion(noticia.getFechaPublicacion())
+                        .build())
+                .collect(Collectors.toList());
+
+        // Crear y devolver un Page<ResponseNoticiaDTO> con la paginación
+        return new PageImpl<>(listaResponseNoticiaDTO, pageable, listaNoticia.getTotalElements());
+    }
     
 }
 
