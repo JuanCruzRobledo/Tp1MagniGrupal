@@ -10,9 +10,11 @@ import com.fantasticos.tp1magni.persistence.repository.EmpresaRepository;
 import com.fantasticos.tp1magni.persistence.repository.NoticiaRepository;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -52,7 +54,7 @@ public class NoticiaService {
     }
 
     public List<ResponseNoticiaWithEmpresaDTO> getRecentNoticias(int quantity, Long idEmpresa) {
-        Pageable pageable = PageRequest.of(0, quantity);
+        Pageable pageable = PageRequest.of(0, quantity, Sort.by(Sort.Direction.DESC, "fechaPublicacion"));
         List<Noticia> noticiaLista = noticiaRepository.findRecentNByEmpresaId(idEmpresa, pageable);
 
         //Convierte la lista en un Stream, lo que permite aplicar operaciones como transformación (map), filtrado, ordenación, etc.
@@ -64,11 +66,12 @@ public class NoticiaService {
     
     public List<ResponseNoticiaDTO> searchNoticias(Long idEmpresa, String titulo) {
         List<Noticia> todasLasNoticias = noticiaRepository.findByEmpresaId(idEmpresa);
-        
+
         List<Noticia> noticiasFiltradas = todasLasNoticias.stream()
-                                                  .filter(noticia -> noticia.getTituloNoticia().toLowerCase().contains(titulo.toLowerCase()) ||
-                                                                             noticia.getResumenNoticia().toLowerCase().contains(titulo.toLowerCase()))
-                                                  .collect(Collectors.toList());
+                .filter(noticia -> noticia.getTituloNoticia().toLowerCase().contains(titulo.toLowerCase()) ||
+                        noticia.getResumenNoticia().toLowerCase().contains(titulo.toLowerCase()))
+                .sorted(Comparator.comparing(Noticia::getFechaPublicacion).reversed())
+                .collect(Collectors.toList());
         
         return noticiaMapper.toNoticiaDTOList(noticiasFiltradas);
     }
