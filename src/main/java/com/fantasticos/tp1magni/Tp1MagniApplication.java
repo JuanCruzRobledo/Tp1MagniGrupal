@@ -88,6 +88,165 @@ public class Tp1MagniApplication {
                     .empresa(empresaElSol)
                     .build();
 
+            Noticia empresaElSolnoticia6 = Noticia.builder()
+                    .tituloNoticia("Hallan un bosque subterráneo en una cueva de China")
+                    .resumenNoticia("Exploradores descubren una vasta cueva en China que alberga un ecosistema completamente desconocido, con árboles de más de 40 metros de altura y especies nunca vistas.")
+                    .imagenNoticia("https://www.shutterstock.com/image-vector/default-ui-image-placeholder-wireframes-600nw-1037719192.jpg")
+                    .contenidoHtml("<h1>Un ecosistema oculto bajo la superficie...</h1>")
+                    .publicada(true)
+                    .fechaPublicacion(sdf.parse("2024-06-15"))
+                    .empresa(empresaElSol)
+                    .build();
+
+            Noticia empresaElSolnoticia7 = Noticia.builder()
+                    .tituloNoticia("Robot logra escribir un libro completo en menos de una hora")
+                    .resumenNoticia("Una inteligencia artificial ha logrado redactar una novela de 300 páginas en tiempo récord, desatando debates sobre el futuro de la literatura y la creatividad humana.")
+                    .imagenNoticia("https://www.shutterstock.com/image-vector/default-ui-image-placeholder-wireframes-600nw-1037719192.jpg")
+                    .contenidoHtml("<h1>El impacto de la IA en la literatura...</h1>")
+                    .publicada(false)
+                    .fechaPublicacion(sdf.parse("2025-03-20"))
+                    .empresa(empresaElSol)
+                    .build();
+
+            Noticia empresaElSolnoticia8 = Noticia.builder()
+                    .tituloNoticia("Descubren un lago de agua líquida en Marte")
+                    .resumenNoticia("Astrónomos han confirmado la existencia de un lago subterráneo en Marte, lo que refuerza la hipótesis de que el planeta rojo podría haber albergado vida en el pasado.")
+                    .imagenNoticia("https://www.shutterstock.com/image-vector/default-ui-image-placeholder-wireframes-600nw-1037719192.jpg")
+                    .contenidoHtml("<h1>Un hallazgo crucial para la exploración espacial...</h1>")
+                    .publicada(true)
+                    .fechaPublicacion(sdf.parse("2024-08-05"))
+                    .empresa(empresaElSol)
+                    .build();
+
+            Noticia empresaElSolnoticia9 = Noticia.builder()
+                    .tituloNoticia("Encuentran una moneda del futuro en una excavación arqueológica")
+                    .resumenNoticia("Un grupo de arqueólogos asegura haber encontrado una moneda con símbolos desconocidos y una fecha que indica el año 2100.")
+                    .imagenNoticia("https://www.shutterstock.com/image-vector/default-ui-image-placeholder-wireframes-600nw-1037719192.jpg")
+                    .contenidoHtml("<h1>Un misterio que desafía la historia...</h1>")
+                    .publicada(false)
+                    .fechaPublicacion(sdf.parse("2025-02-01"))
+                    .empresa(empresaElSol)
+                    .build();
+
+            Noticia empresaElSolnoticia10 = Noticia.builder()
+                    .tituloNoticia("Primer ser humano con implantes cibernéticos funcionales")
+                    .resumenNoticia("Un hombre en Japón se convierte en la primera persona en integrar implantes neuronales que amplifican sus capacidades cognitivas y físicas.")
+                    .imagenNoticia("https://www.shutterstock.com/image-vector/default-ui-image-placeholder-wireframes-600nw-1037719192.jpg")
+                    .contenidoHtml("<h1>El futuro de la humanidad podría estar en la fusión con la tecnología...</h1>")
+                    .publicada(true)
+                    .fechaPublicacion(sdf.parse("2024-12-10"))
+                    .empresa(empresaElSol)
+                    .build();
+
+            Noticia empresaElSolnoticia11 = Noticia.builder()
+                    .tituloNoticia("Inventan una batería que dura 100 años")
+                    .resumenNoticia("Científicos anuncian la creación de una batería revolucionaria capaz de alimentar dispositivos por más de un siglo sin necesidad de recarga.")
+                    .imagenNoticia("https://www.shutterstock.com/image-vector/default-ui-image-placeholder-wireframes-600nw-1037719192.jpg")
+                    .contenidoHtml("<h1>Un avance que podría transformar la industria energética...</h1>")
+                    .publicada(true)
+                    .fechaPublicacion(sdf.parse("2024-07-22"))
+                    .empresa(empresaElSol)
+                    .build();
+
+            Noticia empresaElSolnoticia12 = Noticia.builder()
+                    .tituloNoticia("Desarrollan un traductor universal en tiempo real")
+                    .resumenNoticia("Una startup ha creado un dispositivo capaz de traducir cualquier idioma de manera instantánea, revolucionando la comunicación global.")
+                    .imagenNoticia("https://www.shutterstock.com/image-vector/default-ui-image-placeholder-wireframes-600nw-1037719192.jpg")
+                    .contenidoHtml("<h1>El fin de las barreras lingüísticas...</h1>")
+                    .publicada(false)
+                    .fechaPublicacion(sdf.parse("2025-04-11"))
+                    .empresa(empresaElSol)
+                    .build();
+
+            Noticia empresaElSolnoticia13 = Noticia.builder()
+                    .tituloNoticia("Crean un material indestructible más fuerte que el diamante")
+                    .resumenNoticia("Un equipo de físicos ha sintetizado un nuevo material que supera la resistencia del diamante, con aplicaciones potenciales en la industria aeroespacial y militar.")
+                    .imagenNoticia("https://www.shutterstock.com/image-vector/default-ui-image-placeholder-wireframes-600nw-1037719192.jpg")
+                    .contenidoHtml("<h1>Un avance sin precedentes en la ciencia de materiales...</h1>")
+                    .publicada(true)
+                    .fechaPublicacion(sdf.parse("2024-09-28"))
+                    .empresa(empresaElSol)
+                    .build();
+
+            Noticia empresaElSolnoticia14 = Noticia.builder()
+                    .tituloNoticia("Detectan una señal de radio que podría provenir de una civilización extraterrestre")
+                    .resumenNoticia("Astrónomos captan una señal de radio intermitente proveniente de una estrella lejana que desafía las explicaciones convencionales.")
+                    .imagenNoticia("https://www.shutterstock.com/image-vector/default-ui-image-placeholder-wireframes-600nw-1037719192.jpg")
+                    .contenidoHtml("<h1>Un posible contacto con inteligencia extraterrestre...</h1>")
+                    .publicada(true)
+                    .fechaPublicacion(sdf.parse("2024-10-30"))
+                    .empresa(empresaElSol)
+                    .build();
+
+            Noticia empresaElSolnoticia15 = Noticia.builder()
+                    .tituloNoticia("Científicos logran revivir órganos horas después de la muerte")
+                    .resumenNoticia("Un innovador procedimiento permite restaurar funciones vitales en órganos después de la muerte, revolucionando el trasplante de órganos.")
+                    .imagenNoticia("https://www.shutterstock.com/image-vector/default-ui-image-placeholder-wireframes-600nw-1037719192.jpg")
+                    .contenidoHtml("<h1>Un avance médico que podría salvar millones de vidas...</h1>")
+                    .publicada(false)
+                    .fechaPublicacion(sdf.parse("2025-05-05"))
+                    .empresa(empresaElSol)
+                    .build();
+
+            Noticia empresaElSolnoticia16 = Noticia.builder()
+                    .tituloNoticia("Inteligencia Artificial predice el clima con 99% de precisión")
+                    .resumenNoticia("Un nuevo algoritmo de IA desarrollado por científicos promete predecir el clima con una precisión sin precedentes, revolucionando la meteorología moderna.")
+                    .imagenNoticia("https://www.shutterstock.com/image-vector/default-ui-image-placeholder-wireframes-600nw-1037719192.jpg")
+                    .contenidoHtml("<h1>Una nueva era en la predicción climática...</h1>")
+                    .publicada(true)
+                    .fechaPublicacion(sdf.parse("2025-02-15"))
+                    .empresa(empresaElSol)
+                    .build();
+
+            Noticia empresaElSolnoticia17 = Noticia.builder()
+                    .tituloNoticia("Descubren una cueva con pinturas rupestres de 20,000 años")
+                    .resumenNoticia("Arqueólogos han encontrado una cueva con pinturas rupestres nunca antes vistas, que podrían cambiar la historia del arte prehistórico.")
+                    .imagenNoticia("https://www.shutterstock.com/image-vector/default-ui-image-placeholder-wireframes-600nw-1037719192.jpg")
+                    .contenidoHtml("<h1>Un hallazgo histórico...</h1>")
+                    .publicada(true)
+                    .fechaPublicacion(sdf.parse("2024-08-20"))
+                    .empresa(empresaElSol)
+                    .build();
+
+            Noticia empresaElSolnoticia18 = Noticia.builder()
+                    .tituloNoticia("Científicos logran cultivar plantas en suelo lunar")
+                    .resumenNoticia("Un equipo de investigadores ha conseguido hacer crecer vegetales en suelo lunar simulado, abriendo nuevas posibilidades para la colonización espacial.")
+                    .imagenNoticia("https://www.shutterstock.com/image-vector/default-ui-image-placeholder-wireframes-600nw-1037719192.jpg")
+                    .contenidoHtml("<h1>Un paso más hacia la agricultura espacial...</h1>")
+                    .publicada(false)
+                    .fechaPublicacion(sdf.parse("2024-07-05"))
+                    .empresa(empresaElSol)
+                    .build();
+
+            Noticia empresaElSolnoticia19 = Noticia.builder()
+                    .tituloNoticia("Se descubre un nuevo mineral en el fondo del océano")
+                    .resumenNoticia("Exploradores submarinos han hallado un mineral desconocido en las profundidades del océano Pacífico, con propiedades únicas aún en estudio.")
+                    .imagenNoticia("https://www.shutterstock.com/image-vector/default-ui-image-placeholder-wireframes-600nw-1037719192.jpg")
+                    .contenidoHtml("<h1>Un descubrimiento sin precedentes en geología...</h1>")
+                    .publicada(true)
+                    .fechaPublicacion(sdf.parse("2024-06-12"))
+                    .empresa(empresaElSol)
+                    .build();
+
+            Noticia empresaElSolnoticia20 = Noticia.builder()
+                    .tituloNoticia("Robot asistente con emociones humanas es presentado al mundo")
+                    .resumenNoticia("Una empresa tecnológica ha desarrollado un robot capaz de mostrar emociones humanas, revolucionando el campo de la inteligencia artificial y la robótica.")
+                    .imagenNoticia("https://www.shutterstock.com/image-vector/default-ui-image-placeholder-wireframes-600nw-1037719192.jpg")
+                    .contenidoHtml("<h1>Un nuevo avance en la robótica...</h1>")
+                    .publicada(true)
+                    .fechaPublicacion(sdf.parse("2024-05-10"))
+                    .empresa(empresaElSol)
+                    .build();
+
+            Noticia empresaElSolnoticia21 = Noticia.builder()
+                    .tituloNoticia("Un asteroide desconocido pasará cerca de la Tierra esta semana")
+                    .resumenNoticia("Astrónomos han detectado un asteroide de gran tamaño que pasará a una distancia segura de la Tierra, pero su origen sigue siendo un misterio.")
+                    .imagenNoticia("https://www.shutterstock.com/image-vector/default-ui-image-placeholder-wireframes-600nw-1037719192.jpg")
+                    .contenidoHtml("<h1>Un visitante inesperado en nuestro sistema solar...</h1>")
+                    .publicada(true)
+                    .fechaPublicacion(sdf.parse("2024-04-01"))
+                    .empresa(empresaElSol)
+                    .build();
 
 
             // EMPRESA DIARIO UNO
@@ -342,7 +501,7 @@ public class Tp1MagniApplication {
                     .build();
 
             empresaRepository.saveAll(List.of(empresaElSol,empresaDiarioUno,empresaLaNacion,empresaMdz,empresaClarin));
-            noticiaRepository.saveAll(List.of(empresaElSolnoticia1,empresaElSolnoticia2,empresaElSolnoticia3,empresaElSolnoticia4,empresaElSolnoticia5,diarioUnoEmpresaNoticia1,diarioUnoEmpresaNoticia2,diarioUnoEmpresaNoticia3,diarioUnoEmpresaNoticia4,diarioUnoEmpresaNoticia5,laNacionEmpresaNoticia1,laNacionEmpresaNoticia2,laNacionEmpresaNoticia3,laNacionEmpresaNoticia4,laNacionEmpresaNoticia5,mdzEmpresaNoticia1,mdzEmpresaNoticia2,mdzEmpresaNoticia3,mdzEmpresaNoticia4,mdzEmpresaNoticia5,clarinEmpresaNoticia1,clarinEmpresaNoticia2,clarinEmpresaNoticia3,clarinEmpresaNoticia4,clarinEmpresaNoticia5));
+            noticiaRepository.saveAll(List.of(empresaElSolnoticia1,empresaElSolnoticia2,empresaElSolnoticia3,empresaElSolnoticia4,empresaElSolnoticia5,empresaElSolnoticia6,empresaElSolnoticia7,empresaElSolnoticia8,empresaElSolnoticia9,empresaElSolnoticia10,empresaElSolnoticia11,empresaElSolnoticia12,empresaElSolnoticia13,empresaElSolnoticia14,empresaElSolnoticia15,empresaElSolnoticia16,empresaElSolnoticia17,empresaElSolnoticia18,empresaElSolnoticia19,empresaElSolnoticia20,empresaElSolnoticia21,diarioUnoEmpresaNoticia1,diarioUnoEmpresaNoticia2,diarioUnoEmpresaNoticia3,diarioUnoEmpresaNoticia4,diarioUnoEmpresaNoticia5,laNacionEmpresaNoticia1,laNacionEmpresaNoticia2,laNacionEmpresaNoticia3,laNacionEmpresaNoticia4,laNacionEmpresaNoticia5,mdzEmpresaNoticia1,mdzEmpresaNoticia2,mdzEmpresaNoticia3,mdzEmpresaNoticia4,mdzEmpresaNoticia5,clarinEmpresaNoticia1,clarinEmpresaNoticia2,clarinEmpresaNoticia3,clarinEmpresaNoticia4,clarinEmpresaNoticia5));
         };
     }
 
