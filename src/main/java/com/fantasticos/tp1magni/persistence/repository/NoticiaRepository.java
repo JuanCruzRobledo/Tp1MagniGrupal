@@ -16,5 +16,8 @@ public interface NoticiaRepository extends CrudRepository<Noticia,Long> {
     @Query("SELECT n FROM Noticia n WHERE n.empresa.id = :idEmpresa ORDER BY n.fechaPublicacion DESC")
     List<Noticia> findRecentNByEmpresaId(@Param("idEmpresa") Long idEmpresa, Pageable pageable);
 
-    Page<Noticia> findAll(Pageable pageable);
+
+    // Buscar noticias que contengan la palabra clave en el título o en la descripción sin importar la empresa
+    @Query("SELECT n FROM Noticia n WHERE (n.tituloNoticia LIKE CONCAT('%', :keyword, '%') OR n.resumenNoticia LIKE CONCAT('%', :keyword, '%')) AND n.empresa.id = :idEmpresa")
+    Page<Noticia> findByKeyword(@Param("keyword") String keyword, Pageable pageable, @Param("idEmpresa") Long idEmpresa);
 }

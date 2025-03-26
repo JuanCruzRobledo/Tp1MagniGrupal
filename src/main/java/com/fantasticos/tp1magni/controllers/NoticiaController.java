@@ -139,23 +139,26 @@ public class NoticiaController {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error al obtener las noticias recientes: ", e);
         }
     }
-    
-    
-    @GetMapping("/getSearch/{idEmpresa}")
-    public ResponseEntity<?> searchNoticias(
+
+
+    @GetMapping("/{idEmpresa}")
+    public ResponseEntity<?> obtenerPaginados(
             @PathVariable Long idEmpresa,
-            @RequestParam String nombreNoticia) {
-        System.out.println("Endpoint alcanzado con idEmpresa: " + idEmpresa + ", nombreNoticia: " + nombreNoticia);
-        List<ResponseNoticiaDTO> noticias = noticiaService.searchNoticias(idEmpresa, nombreNoticia);
-        if (noticias.isEmpty()) {
-            return ResponseEntity.noContent().build();
+            @RequestParam String palabraClave,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+        try {
+            Page<ResponseNoticiaWithEmpresaDTO> listaDeNoticias = noticiaService.obtenerNoticiasPorPalabraClave(palabraClave, page, size,idEmpresa);
+
+            if (listaDeNoticias.isEmpty()) {
+                return ResponseEntity.noContent().build();
+            }
+
+            return ResponseEntity.ok(listaDeNoticias);
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error al obtener noticias paginadas", e);
         }
-        return ResponseEntity.ok(noticias);
     }
 
-    @GetMapping
-    public Page<ResponseNoticiaDTO> obtenerPaginados(Pageable pageable) {
-        return noticiaService.obtenerPaginados(pageable);
-    }
-    
+
 }

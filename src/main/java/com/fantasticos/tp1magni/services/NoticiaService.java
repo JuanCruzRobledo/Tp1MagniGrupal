@@ -61,17 +61,27 @@ public class NoticiaService {
                 .map(noticiaMapper::toResponseNoticiaWithEmpresaDTO)
                 .collect(Collectors.toList());
     }
-    
-    public List<ResponseNoticiaDTO> searchNoticias(Long idEmpresa, String titulo) {
-        List<Noticia> todasLasNoticias = noticiaRepository.findByEmpresaId(idEmpresa);
 
-        List<Noticia> noticiasFiltradas = todasLasNoticias.stream()
-                .filter(noticia -> noticia.getTituloNoticia().toLowerCase().contains(titulo.toLowerCase()) ||
-                        noticia.getResumenNoticia().toLowerCase().contains(titulo.toLowerCase()))
-                .sorted(Comparator.comparing(Noticia::getFechaPublicacion).reversed())
+
+    public Page<ResponseNoticiaWithEmpresaDTO> obtenerNoticiasPorPalabraClave(String palabraClave, int page,int size, Long idEmpresa) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by("fechaPublicacion").descending());
+        Page<Noticia> listaDeNoticias = noticiaRepository.findByKeyword(palabraClave, pageable, idEmpresa);
+
+        // Convertir cada Noticia a ResponseNoticiaDTO
+        List<ResponseNoticiaWithEmpresaDTO> listaResponseNoticiaDTO = listaDeNoticias.getContent().stream()
+                .map(noticia -> ResponseNoticiaWithEmpresaDTO.builder()
+                        .id(noticia.getId())
+                        .tituloNoticia(noticia.getTituloNoticia())
+                        .resumenNoticia(noticia.getResumenNoticia())
+                        .imagenNoticia(noticia.getImagenNoticia())
+                        .contenidoHtml(noticia.getContenidoHtml())
+                        .publicada(noticia.isPublicada())
+                        .fechaPublicacion(noticia.getFechaPublicacion())
+                        .idEmpresa(noticia.getEmpresa().getId())
+                        .build())
                 .collect(Collectors.toList());
-        
-        return noticiaMapper.toNoticiaDTOList(noticiasFiltradas);
+
+        return new PageImpl<>(listaResponseNoticiaDTO, pageable, listaDeNoticias.getTotalElements());
     }
     
     
@@ -119,26 +129,6 @@ public class NoticiaService {
         return noticiaMapper.toNoticiaDTO(addNoticia);
     }
 
-    public Page<ResponseNoticiaDTO> obtenerPaginados(Pageable pageable) {
-        // Obtener la página de noticias desde el repositorio
-        Page<Noticia> listaNoticia = noticiaRepository.findAll(pageable);
-
-        // Convertir cada Noticia a ResponseNoticiaDTO
-        List<ResponseNoticiaDTO> listaResponseNoticiaDTO = listaNoticia.getContent().stream()
-                .map(noticia -> ResponseNoticiaDTO.builder()
-                        .id(noticia.getId())
-                        .tituloNoticia(noticia.getTituloNoticia())
-                        .resumenNoticia(noticia.getResumenNoticia())
-                        .imagenNoticia(noticia.getImagenNoticia())
-                        .contenidoHtml(noticia.getContenidoHtml())
-                        .publicada(noticia.isPublicada())
-                        .fechaPublicacion(noticia.getFechaPublicacion())
-                        .build())
-                .collect(Collectors.toList());
-
-        // Crear y devolver un Page<ResponseNoticiaDTO> con la paginación
-        return new PageImpl<>(listaResponseNoticiaDTO, pageable, listaNoticia.getTotalElements());
-    }
     
 }
 
