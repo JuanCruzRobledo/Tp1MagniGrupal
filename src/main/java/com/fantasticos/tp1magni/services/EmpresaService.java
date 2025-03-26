@@ -76,9 +76,11 @@ public class EmpresaService {
         if (!empresaRepository.existsById(id)) {
             return null;
         }
+        List<Noticia> listaNoticia = noticiaRepository.findByEmpresaId(id);
 
         Empresa empresaNueva = empresaMapper.toEntity(empresaDTO);
         empresaNueva.setId(id);
+        empresaNueva.setListaNoticia(listaNoticia);
 
         return empresaMapper.toResponseEmpresaDTO(empresaRepository.save(empresaNueva));
     }

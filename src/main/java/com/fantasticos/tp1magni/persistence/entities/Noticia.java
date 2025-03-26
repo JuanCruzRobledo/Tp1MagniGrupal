@@ -25,6 +25,7 @@ public class Noticia {
     @Column(columnDefinition = "TEXT", length = 1024)
     private String resumenNoticia;
 
+    @Lob
     @Column
     private String imagenNoticia;
 
