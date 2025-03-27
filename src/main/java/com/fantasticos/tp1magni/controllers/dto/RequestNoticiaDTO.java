@@ -23,7 +23,6 @@ public class RequestNoticiaDTO {
     @Size(max = 1024, message = "El resumen de la noticia no puede superar los 1024 caracteres")
     private String resumenNoticia;
 
-    @Size(max = 128, message = "La URL de la imagen no puede superar los 128 caracteres")
     private String imagenNoticia;
 
     @Size(max = 20480, message = "El contenido HTML no puede superar los 20480 caracteres")
