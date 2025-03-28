@@ -27,6 +27,7 @@ public class NoticiaController {
         this.noticiaService = noticiaService;
     }
 
+    //ALTA NOTICIA, SE NECECITA EL ID DE LA EMPRESA ASOCIADA Y UNA NOTICIA SIN ID NI EMPRESA ASOCIADA
     @PostMapping("/post")
     public ResponseEntity<?> postNoticia(@RequestBody @Valid RequestNoticiaDTO requestNoticiaDTO, @RequestParam(name = "empresaId") Long empresaId) {
         if (requestNoticiaDTO == null) {
@@ -43,7 +44,7 @@ public class NoticiaController {
                     .body("Error al agregar la noticia: " + e.getMessage());
         }
     }
-
+    //BAJA NOTICIA, SE NECECITA EL ID DE LA NOTICIA
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> deleteNoticia(@PathVariable Long id) {
         if (id == null) {
@@ -60,7 +61,7 @@ public class NoticiaController {
                     .body("Error al eliminar la noticia: " + e.getMessage());
         }
     }
-
+    //MODIFICACION NOTICIA, SE NECECITA EL ID DE LA NOTICIA
     @PutMapping("/put/{id}")
     public ResponseEntity<?> updateNoticia(@PathVariable Long id, @RequestBody @Valid RequestNoticiaDTO requestNoticiaDTO) {
         if (id == null || requestNoticiaDTO == null) {
@@ -78,6 +79,7 @@ public class NoticiaController {
         }
     }
 
+    //GET NOTICIA CON EMPRESA ASOCIADA, SE NECECITA EL ID DE LA NOTICIA
     @GetMapping("/get/{id}")
     public ResponseEntity<?> getNoticia(@PathVariable Long id) {
         if (id == null) {
@@ -95,7 +97,7 @@ public class NoticiaController {
         }
     }
 
-    //Acá getteamos todas las noticias de una empresa
+    //GET TODAS NOTICIA SIN EMPRESA ASOCIADA, SE NECECITA EL ID DE LA EMPRESA
     @GetMapping("/getAll/{idEmpresa}")
     public ResponseEntity<?> getAllNoticiasEmpresa(@PathVariable Long idEmpresa) {
         try {
@@ -109,6 +111,8 @@ public class NoticiaController {
         }
     }
 
+    //NO SE USA
+    //GET TODAS NOTICIA CON ID DE EMPRESA, NO SE NECECITA NADA
     @GetMapping("/getAll")
     public ResponseEntity<?> getAllNoticia() {
         try {
@@ -122,7 +126,7 @@ public class NoticiaController {
         }
     }
 
-    //Acá getteamos solo las 5 noticias más recientes de 1 empresa,
+    //GET NOTICIA POR CANTIDAD Y ORDENADA POR FECHA, SE NECECITA EL ID DE LA EMPRESA
     @GetMapping("/getRecent")
     public ResponseEntity<?> getRecentNoticias(
             @RequestParam(defaultValue = "5") int quantity,
@@ -139,7 +143,7 @@ public class NoticiaController {
         }
     }
 
-
+    //GET PAGINAS CON NOTICIAS ASOCIADAS A UNA EMPRESA, SE NECECITA ID DE EMPRESA, PAGINA Y TAMAÑO
     @GetMapping("/{idEmpresa}")
     public ResponseEntity<?> obtenerPaginados(
             @PathVariable Long idEmpresa,

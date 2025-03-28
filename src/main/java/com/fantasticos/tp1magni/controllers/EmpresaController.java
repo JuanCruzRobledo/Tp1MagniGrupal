@@ -22,6 +22,8 @@ public class EmpresaController {
         this.empresaService = empresaService;
     }
 
+
+    //ALTA DE UNA EMPRESA, SE NECECITAN UNA EMPRESA SIN SUS NOTICIAS NI ID
     @PostMapping("/post")
     public ResponseEntity<?> postEmpresa(@RequestBody @Valid RequestEmpresaDTO empresaDTO) {
         try {
@@ -33,6 +35,7 @@ public class EmpresaController {
         }
     }
 
+    //BAJA DE UNA EMPRESA, SE NECECITA EL ID DE LA EMPRESA
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> deleteEmpresa(@PathVariable Long id) {
         try {
@@ -47,6 +50,7 @@ public class EmpresaController {
         }
     }
 
+    //MODIFICACION DE UNA EMPRESA, SE NECECITA EL ID DE LA EMPRESA
     @PutMapping("/put/{id}")
     public ResponseEntity<?> updateEmpresa(@PathVariable Long id, @RequestBody @Valid RequestEmpresaDTO empresaDTO) {
         try {
@@ -61,8 +65,8 @@ public class EmpresaController {
         }
     }
 
+    //GET EMPRESA CON LISTA DE NOTICIAS Y TODOS LOS ATRIBUTOS, SE NECECITA EL ID DE LA EMPRESA
     @GetMapping("/get/{id}")
-    // Get 1 empresa con todas sus noticias
     public ResponseEntity<?> getEmpresa(@PathVariable Long id) {
         try {
             ResponseEmpresaWithNoticiasDTO empresa = empresaService.getEmpresa(id);
@@ -78,7 +82,7 @@ public class EmpresaController {
 
     }
 
-    // Get 1 empresa SIN sus noticias
+    //GET EMPRESA SIN LISTA DE NOTICIAS, SE NECECITA EL ID DE LA EMPRESA
     @GetMapping("/simple/{id}")
     public ResponseEntity<?> getEmpresaSimple(@PathVariable Long id) {
         try {
@@ -94,8 +98,8 @@ public class EmpresaController {
         }
     }
 
-    @GetMapping("/getAll")
-    // Get todas las empresas sin sus noticias
+    //GET TODAS LAS EMPRESAS SIN LISTA DE NOTICIAS
+    @GetMapping("simple/getAll")
     public ResponseEntity<?> getAllEmpresa() {
         try {
             List<ResponseEmpresaDTO> empresas = empresaService.getAllEmpresa();
@@ -105,9 +109,8 @@ public class EmpresaController {
         }
     }
 
-
+    //GET EMPRESA SOLO CON ID Y DENOMINACION
     @GetMapping("basic/getAll")
-    // Get todas las empresas con ID y DENOMINACION
     public ResponseEntity<?> getAllBasicEmpresa() {
         try {
             List<ResponseBasicEmpresaDTO> empresas = empresaService.getAllBasicEmpresa();
