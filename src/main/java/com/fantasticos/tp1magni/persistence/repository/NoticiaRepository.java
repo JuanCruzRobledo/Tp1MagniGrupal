@@ -18,6 +18,9 @@ public interface NoticiaRepository extends CrudRepository<Noticia,Long> {
 
 
     // Buscar noticias que contengan la palabra clave en el título o en la descripción sin importar la empresa
-    @Query("SELECT n FROM Noticia n WHERE (n.tituloNoticia LIKE CONCAT('%', :keyword, '%') OR n.resumenNoticia LIKE CONCAT('%', :keyword, '%')) AND n.empresa.id = :idEmpresa AND n.publicada = true")
+//    @Query("SELECT n FROM Noticia n WHERE (n.tituloNoticia LIKE CONCAT('%', :keyword, '%') OR n.resumenNoticia LIKE CONCAT('%', :keyword, '%')) AND n.empresa.id = :idEmpresa AND n.publicada = true")
+    @Query("SELECT n FROM Noticia n WHERE (LOWER(CAST(n.tituloNoticia AS STRING)) LIKE LOWER(CONCAT('%', :keyword, '%')) " +
+            "OR LOWER(CAST(n.resumenNoticia AS STRING)) LIKE LOWER(CONCAT('%', :keyword, '%'))) " +
+            "AND n.empresa.id = :idEmpresa AND n.publicada = true")
     Page<Noticia> findByKeyword(@Param("keyword") String keyword, Pageable pageable, @Param("idEmpresa") Long idEmpresa);
 }

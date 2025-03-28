@@ -122,8 +122,7 @@ public class NoticiaController {
         }
     }
 
-    //Acá getteamos solo las 5 o 20 noticias más recientes de 1 empresa, dependiendo
-    //de si el pedido viene del buscador o del slider
+    //Acá getteamos solo las 5 noticias más recientes de 1 empresa,
     @GetMapping("/getRecent")
     public ResponseEntity<?> getRecentNoticias(
             @RequestParam(defaultValue = "5") int quantity,
